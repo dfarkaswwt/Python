@@ -1,0 +1,76 @@
+"""
+class config help section
+get = specify  interface
+show = show interface
+toggle = toggle interface
+"""
+
+import cli
+
+class interface:
+
+    def __int__(self):
+        self.intf = ' '
+        return
+
+    def get(self):
+        self.intf = raw_input('Enter interface name')
+        return(self.intf)
+
+    def show(self):
+        cli_sh = 'show interface ' + self.intf
+        self.sh = cli.cli(cli_sh)
+        print (self.sh)
+        return
+
+    def toggle(self):
+        cli_status = 'show interface ' + self.intf + ' | inc down'
+        self.status = cli.cli(cli_status)
+        cli_shut = 'conf t ; int ' + self.intf + ' ;  shut'  
+        cli_no_shut = 'conf t ; int ' + self.intf + ' ; no shut'
+        if len(self.status) == 0:      #if interface is up
+            cli.cli(cli_shut)          #then shut interface
+            print (cli_shut)
+        else:                          #if interface is down
+            cli.cli(cli_no_shut)       #then no shut interface
+            print (cli_no_shut)
+        self.status = cli.cli(cli_status)   #update status
+        return
+
+#class host
+
+class host_name:
+
+    def __int__(self):
+        return
+
+    def show(self):
+        self.host = cli.cli('show hostname')
+        print (self.host)
+        return
+
+
+##############
+
+from interface_class import *
+
+x = interface()
+y = host_name()
+
+y.show()
+output = hostname of Nexus
+
+
+x.get()
+output  = "Enter Interface Name"   with prompt waiting for data entry
+
+x.show()
+output = show interface for previously specified interface
+
+x.intf
+output = previously specified interface
+
+x.sh
+out put = raw output of x.show()
+
+
